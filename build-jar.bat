@@ -1,10 +1,10 @@
 
 @echo off
-title EduVibe - Build JAR
+title EduVibe - Build Executable JAR
 color 0B
 
 echo ========================================
-echo          BUILDING EDuvIBE
+echo       BUILDING EDuvIBE EXECUTABLE
 echo ========================================
 echo.
 
@@ -26,10 +26,10 @@ if not exist "%MVN%" (
     exit /b 1
 )
 
-echo Building EduVibe...
+echo Building EduVibe and packaging dependencies...
 echo.
 
-call "%MVN%" clean package
+call "%MVN%" clean package org.apache.maven.plugins:maven-shade-plugin:3.6.0:shade
 
 if errorlevel 1 (
     echo.
@@ -39,6 +39,22 @@ if errorlevel 1 (
 )
 
 echo.
-echo BUILD SUCCESSFUL!
-echo Check the target folder for EduVibe.jar.
+echo Checking for MySQL JDBC driver...
+
+"%JAVA_HOME%\bin\jar.exe" tf target\EduVibeFinal-1.0-SNAPSHOT.jar | findstr /c:"com/mysql/cj/jdbc/Driver.class"
+
+if errorlevel 1 (
+    echo ERROR: MySQL driver is missing from the JAR!
+    pause
+    exit /b 1
+)
+
+echo.
+echo ========================================
+echo       EXECUTABLE JAR READY!
+echo ========================================
+echo.
+echo File:
+echo target\EduVibeFinal-1.0-SNAPSHOT.jar
+echo.
 pause
