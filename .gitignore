@@ -1,0 +1,27 @@
+
+# Maven and generated builds
+target/
+dist/
+
+# Compiled Java files
+*.class
+
+# NetBeans
+nbproject/private/
+
+# IDE
+.idea/
+*.iml
+
+# Logs
+*.log
+
+# Secrets
+.env
+
+# OS files
+Thumbs.db
+.DS_Store
+uploads/
+# User-uploaded media and avatars
+uploads/
