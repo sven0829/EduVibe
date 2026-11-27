@@ -3,12 +3,12 @@
 title EduVibe - Build Executable JAR
 color 0B
 
+cd /d "%~dp0"
+
 echo ========================================
-echo       BUILDING EDuvIBE EXECUTABLE
+echo       BUILDING EDuvIBE JAR
 echo ========================================
 echo.
-
-cd /d "%~dp0"
 
 set "JAVA_HOME=C:\Program Files\Eclipse Adoptium\jdk-21.0.13.9-hotspot"
 set "PATH=%JAVA_HOME%\bin;%PATH%"
@@ -26,35 +26,23 @@ if not exist "%MVN%" (
     exit /b 1
 )
 
-echo Building EduVibe and packaging dependencies...
-echo.
-
 call "%MVN%" clean package org.apache.maven.plugins:maven-shade-plugin:3.6.0:shade
 
 if errorlevel 1 (
-    echo.
     echo BUILD FAILED!
     pause
     exit /b 1
 )
 
-echo.
-echo Checking for MySQL JDBC driver...
-
 "%JAVA_HOME%\bin\jar.exe" tf target\EduVibeFinal-1.0-SNAPSHOT.jar | findstr /c:"com/mysql/cj/jdbc/Driver.class"
 
 if errorlevel 1 (
-    echo ERROR: MySQL driver is missing from the JAR!
+    echo ERROR: MySQL JDBC driver missing.
     pause
     exit /b 1
 )
 
 echo.
-echo ========================================
-echo       EXECUTABLE JAR READY!
-echo ========================================
-echo.
-echo File:
+echo EXECUTABLE JAR READY!
 echo target\EduVibeFinal-1.0-SNAPSHOT.jar
-echo.
 pause
