@@ -25,3 +25,4 @@ Thumbs.db
 uploads/
 # User-uploaded media and avatars
 uploads/
+dependency-reduced-pom.xml
